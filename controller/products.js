@@ -5,15 +5,15 @@ export const list =async (req,res) =>{
     res.json(product)
 }
 export const read =async (req,res) =>{
-    const product = await Product.find({slug: req.params.slug}).exec()
+    const product = await Product.find({id: req.params._id}).exec()
     res.json(product)
 }
 export const update = async (req,res) =>{
-    const {name,price,decscription,quantity,images,category} = req.body;
+    const {name,price,decscription,quantity,img,category} = req.body;
     try {
         const product = await Product.findOneAndUpdate(
-            {slug: req.params.slug},
-            {name,price,decscription,quantity,images,category,slug: slugify(name)},
+            {id: req.params._id},
+            {name,price,decscription,quantity,img,category,slug: slugify(name)},
             {new:true}
         )
         res.json(product)
@@ -23,8 +23,8 @@ export const update = async (req,res) =>{
 }
 export const create =async (req,res) =>{
     try {
-        const {name,price,decscription,quantity,images,category} = req.body;
-        const product = await new Product({name,price,decscription,quantity,images,category,slug: slugify(name)}).save()
+        const {name,price,decscription,quantity,img,category} = req.body;
+        const product = await new Product({name,price,decscription,quantity,img,category,slug: slugify(name)}).save()
         res.json(product)
     } catch (error) {
         res.status(400).json({message:"Lại sai"})
@@ -32,7 +32,7 @@ export const create =async (req,res) =>{
 }
 export const remove = async (req,res) =>{
     try{
-        const remove = await Product.findOneAndDelete({slug:req.params.slug})
+        const remove = await Product.findOneAndDelete({id:req.params._id})
         res.json(remove);
     }catch(error){
         res.status(400).send("Lại sai")

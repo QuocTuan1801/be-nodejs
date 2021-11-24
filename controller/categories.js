@@ -6,14 +6,14 @@ export const list =async (req,res) =>{
     res.json(category);
 }
 export const read =async (req,res) =>{
-    const category = await Category.find({slug: req.params.slug}).exec();
+    const category = await Category.find({id: req.params._id}).exec();
     res.json(category)
 }
 export const update = async (req,res) =>{
     const { name } = req.body;
     try {
         const category = await Category.findOneAndUpdate(
-            { slug: req.params.slug },
+            { id: req.params._id },
             { name, slug: slugify(name) },
             { new: true });
         res.json(category);

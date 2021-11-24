@@ -54,6 +54,7 @@ export const isAuth = (req, res,next) => {
         })
     }
     next();
+    next();
 }
 export const isAdmin = (req,res,next) =>{
     if(req.profile.role == 0){
